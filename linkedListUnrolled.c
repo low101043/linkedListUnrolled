@@ -20,24 +20,24 @@ Node* createNode(int value){
     node -> numberOfElements = 1;
     node -> data[0] = value;
     node -> next = NULL;
-    printf("Added Node: %d\n", node ->data[0]);
+    //printf("Added Node: %d\n", node ->data[0]);
     return node;
 }
 
 LinkedList* append(LinkedList* list, int num){
     Node* node = list ->head;
-    printf("Adding number: %d\n", num);
+    //printf("Adding number: %d\n", num);
     if (node == NULL){
         Node* headNode = createNode(num);
         list -> head = headNode;
-        printf("Data added: %d", headNode->data[0]);
+        //printf("Data added: %d", headNode->data[0]);
         return list;
     }
     else{
         int amountInHead;
-        printf("We have got here\n");
+        //printf("We have got here\n");
         amountInHead = node -> numberOfElements;
-        printf("Got the data\n");
+        //printf("Got the data\n");
         int finished = 0;
         while (amountInHead >= MAXSIZE && finished == 0){
 
@@ -55,7 +55,7 @@ LinkedList* append(LinkedList* list, int num){
             node -> data[amountInHead] = num;
             node -> numberOfElements = node -> numberOfElements + 1;
         }
-        printf("The data added is %d\n", node->numberOfElements);
+        //printf("The data added is %d\n", node->numberOfElements);
         return list;
     }
     
@@ -63,10 +63,31 @@ LinkedList* append(LinkedList* list, int num){
 
 void printList(LinkedList* list){
     Node* node = list -> head;
-    printf("We have got the node\n");
-    int data = node -> numberOfElements;
-    printf("WE have got the node data %d\n", data);
-    printf("%d\n", node -> data[0]);
+    int numOfElementsHead;
+    numOfElementsHead = node -> numberOfElements;
+    int iHead;
+    for (iHead = 0; iHead < numOfElementsHead; iHead++){
+        int nodeData;
+        nodeData = node ->data[iHead];
+        printf("%d\n", nodeData);
+    }
+    //printf("We have got the node\n");
+    while(node->next != NULL)
+    {
+        node = node -> next;
+        int numOfElements;
+        numOfElements = node -> numberOfElements;
+        int i;
+        for (i = 0; i < numOfElements; i++){
+            int nodeData;
+            nodeData = node ->data[i];
+            printf("%d\n", nodeData);
+        }
+        
+    }
+    
+    //printf("WE have got the node data %d\n", data);
+    //printf("%d\n", node -> data[0]);
 }
 
 int destroyListAll(LinkedList* list){
@@ -83,12 +104,12 @@ int destroyListAll(LinkedList* list){
 
 int main(){
     
-    printf("Do we even start?\n");
+    //printf("Do we even start?\n");
     LinkedList *list;
-    printf("Started\n");
+    //printf("Started\n");
 
     list = (LinkedList *) malloc(sizeof(LinkedList));
-    printf("List Created\n");
+    //printf("List Created\n");
     
     list -> head = NULL;
     list = append(list, 5);
@@ -102,8 +123,12 @@ int main(){
     list = append(list, 3);
     //printf("Appended 3\n");
     list = append(list, 18);
+    list = append(list, 65);
+    list = append(list, 54);
+    list = append(list, 7);
+    list = append(list, 67);
     //printf("Appended 18\n");
-    printf("Destroying All\n");
+    //printf("Destroying All\n");
     printList(list);
     destroyListAll(list);
     return 0;
