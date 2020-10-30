@@ -9,9 +9,9 @@ typedef struct Node{
     struct Node* next;
 } Node;
 
-/*typedef struct LinkedList{
+typedef struct LinkedList{
     Node* head;
-} LinkedList;*/
+} LinkedList;
 
 Node* createNode(int value){
     Node *node;
@@ -20,19 +20,24 @@ Node* createNode(int value){
     node -> numberOfElements = 1;
     node -> data[0] = value;
     node -> next = NULL;
-    printf("Added Node: %d", node ->data[0]);
+    printf("Added Node: %d\n", node ->data[0]);
+    return node;
 }
 
 LinkedList* append(LinkedList* list, int num){
     Node* node = list ->head;
-    //printf("Adding number: %d\n", num);
+    printf("Adding number: %d\n", num);
     if (node == NULL){
-        Node* head = createNode(num);
+        Node* headNode = createNode(num);
+        list -> head = headNode;
+        printf("Data added: %d", headNode->data[0]);
         return list;
     }
     else{
         int amountInHead;
+        printf("We have got here\n");
         amountInHead = node -> numberOfElements;
+        printf("Got the data\n");
         int finished = 0;
         while (amountInHead >= MAXSIZE && finished == 0){
 
@@ -50,18 +55,23 @@ LinkedList* append(LinkedList* list, int num){
             node -> data[amountInHead] = num;
             node -> numberOfElements = node -> numberOfElements + 1;
         }
+        printf("The data added is %d\n", node->numberOfElements);
         return list;
     }
     
 }
 
-void printList(Node* head){
-    ;
+void printList(LinkedList* list){
+    Node* node = list -> head;
+    printf("We have got the node\n");
+    int data = node -> numberOfElements;
+    printf("WE have got the node data %d\n", data);
+    printf("%d\n", node -> data[0]);
 }
 
 int destroyListAll(LinkedList* list){
     Node* node = list->head;
-    printf("node to delete: %d\n", node->data[0]);
+    //printf("node to delete: %d\n", *(node->data));
     while (node != NULL){
         Node* nextNode = node ->next;
         free(node);
@@ -73,38 +83,28 @@ int destroyListAll(LinkedList* list){
 
 int main(){
     
-    printf("Do we even start?");
+    printf("Do we even start?\n");
     LinkedList *list;
-    printf("Started");
+    printf("Started\n");
 
     list = (LinkedList *) malloc(sizeof(LinkedList));
-    printf("List Created");
+    printf("List Created\n");
     
     list -> head = NULL;
     list = append(list, 5);
-    printf("Appended 5");
+    //printf("Appended 5\n");
     list = append(list, 6);
-    printf("Appended 6");
+    //printf("Appended 6\n");
     list = append(list, 8);
-    printf("Appended 8");
+    //printf("Appended 8\n");
     list = append(list, 10);
-    printf("Appended 10");
-    list = append(list, 5);
-    printf("Appended 5");
-    list = append(list, 6);
-    printf("Appended 6");
-    list = append(list, 8);
-    printf("Appended 8");
-    list = append(list, 10);
-    printf("Appended 10");
-    list = append(list, 5);
-    printf("Appended 5");
-    list = append(list, 6);
-    printf("Appended 6");
-    list = append(list, 8);
-    printf("Appended 8");
-    list = append(list, 10);
-    printf("Appended 10");
+    //printf("Appended 10\n");
+    list = append(list, 3);
+    //printf("Appended 3\n");
+    list = append(list, 18);
+    //printf("Appended 18\n");
+    printf("Destroying All\n");
+    printList(list);
     destroyListAll(list);
     return 0;
 }
