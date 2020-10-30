@@ -9,9 +9,9 @@ typedef struct Node{
     struct Node* next;
 } Node;
 
-typedef struct LinkedList{
+/*typedef struct LinkedList{
     Node* head;
-} LinkedList;
+} LinkedList;*/
 
 Node* createNode(int value){
     Node *node;
@@ -20,6 +20,7 @@ Node* createNode(int value){
     node -> numberOfElements = 1;
     node -> data[0] = value;
     node -> next = NULL;
+    printf("Added Node: %d", node ->data[0]);
 }
 
 LinkedList* append(LinkedList* list, int num){
@@ -60,6 +61,7 @@ void printList(Node* head){
 
 int destroyListAll(LinkedList* list){
     Node* node = list->head;
+    printf("node to delete: %d\n", node->data[0]);
     while (node != NULL){
         Node* nextNode = node ->next;
         free(node);
@@ -71,23 +73,38 @@ int destroyListAll(LinkedList* list){
 
 int main(){
     
+    printf("Do we even start?");
     LinkedList *list;
+    printf("Started");
 
     list = (LinkedList *) malloc(sizeof(LinkedList));
+    printf("List Created");
     
     list -> head = NULL;
     list = append(list, 5);
+    printf("Appended 5");
     list = append(list, 6);
+    printf("Appended 6");
     list = append(list, 8);
+    printf("Appended 8");
     list = append(list, 10);
+    printf("Appended 10");
     list = append(list, 5);
+    printf("Appended 5");
     list = append(list, 6);
+    printf("Appended 6");
     list = append(list, 8);
+    printf("Appended 8");
     list = append(list, 10);
+    printf("Appended 10");
     list = append(list, 5);
+    printf("Appended 5");
     list = append(list, 6);
+    printf("Appended 6");
     list = append(list, 8);
+    printf("Appended 8");
     list = append(list, 10);
+    printf("Appended 10");
     destroyListAll(list);
     return 0;
 }
