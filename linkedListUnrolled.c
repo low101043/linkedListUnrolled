@@ -3,17 +3,22 @@
 #include <stdio.h>
 
 
-typedef struct Node{
+typedef struct Node
+{
     int numberOfElements;
     int data[MAXSIZE];
     struct Node* next;
+
 } Node;
 
-typedef struct LinkedList{
+typedef struct LinkedList
+{
     Node* head;
+
 } LinkedList;
 
-Node* createNode(int value){
+Node* createNode(int value)
+{
     Node *node;
 
     node = (Node *) malloc(sizeof(Node));
@@ -24,10 +29,12 @@ Node* createNode(int value){
     return node;
 }
 
-LinkedList* append(LinkedList* list, int num){
+LinkedList* append(LinkedList* list, int num)
+{
     Node* node = list ->head;
     //printf("Adding number: %d\n", num);
-    if (node == NULL){
+    if (node == NULL)
+    {
         Node* headNode = createNode(num);
         list -> head = headNode;
         //printf("Data added: %d", headNode->data[0]);
@@ -55,49 +62,17 @@ LinkedList* append(LinkedList* list, int num){
         }
         
     }
-    
-    /*else{           //CHANGE TO WHILE NEXT NOT NULL
-        int amountInHead;
-        //printf("We have got here\n");
-        amountInHead = node -> numberOfElements;
-        //printf("Data in node: %d\n", amountInHead);
-        //printf("Got the data\n");
-        int finished = 0;
-        while (amountInHead >= MAXSIZE && finished == 0 /*&& node -> next != NULL){
-            
-
-            if (node -> next == NULL){
-                Node* newNode = createNode(num);
-                node ->next = newNode;
-                finished = 1;
-
-            }
-            else{
-                node = node -> next;
-                amountInHead = node ->numberOfElements;
-            }
-        }
-        if (amountInHead < MAXSIZE && node ->next == NULL){
-            node -> data[amountInHead] = num;
-            node -> numberOfElements = node -> numberOfElements + 1;
-        }
-        else if (finished == 0){
-            printf("Not added %d\n", num);
-            //NEED TO ADD A VALUE AT END SOMEHOW!
-        }
-        //printf("The data added is %d\n", node->numberOfElements);
-        return list;
-    }*/
-    
 }
 
-void printList(LinkedList* list){
+void printList(LinkedList* list)
+{
     Node* node = list -> head;
     int numOfElementsHead;
     numOfElementsHead = node -> numberOfElements;
     int iHead;
-    printf("Number of elements is: %d\n", numOfElementsHead);
-    for (iHead = 0; iHead < numOfElementsHead; iHead++){
+    //printf("Number of elements is: %d\n", numOfElementsHead);
+    for (iHead = 0; iHead < numOfElementsHead; iHead++)
+    {
         int nodeData;
         //printf("Number of data in node: %d\n", numOfElementsHead);
         nodeData = node ->data[iHead];
@@ -111,8 +86,9 @@ void printList(LinkedList* list){
         int numOfElements;
         numOfElements = node -> numberOfElements;
         int i;
-        printf("Number of elements is: %d\n", numOfElements);
-        for (i = 0; i < numOfElements; i++){
+        //printf("Number of elements is: %d\n", numOfElements);
+        for (i = 0; i < numOfElements; i++)
+        {
             int nodeData;
             //printf("Number of data in node: %d\n", numOfElements);
             nodeData = node ->data[i];
@@ -126,18 +102,21 @@ void printList(LinkedList* list){
     //printf("%d\n", node -> data[0]);
 }
 
-void printNode(Node* node){
+void printNode(Node* node)
+{
     int numOfElementsHead;
     numOfElementsHead = node -> numberOfElements;
     int iHead;
-    for (iHead = 0; iHead < numOfElementsHead; iHead++){
+    for (iHead = 0; iHead < numOfElementsHead; iHead++)
+    {
         int nodeData;
         nodeData = node ->data[iHead];
         printf("%d\n", nodeData);
     }
 }
 
-void printInList(LinkedList* list){
+void printInList(LinkedList* list)
+{
     Node* head = list->head;
 
     if (head == NULL)
@@ -149,16 +128,16 @@ void printInList(LinkedList* list){
     {
         while (head != NULL)
         {
-            printf("New Node: ");
+            printf("New Node: Elements in node: %d | ", head->numberOfElements);
             for (int i = 0; i < MAXSIZE; i++)
             {
                 if (i >= head->numberOfElements)
                 {
-                    printf("NULL ->");
+                    printf("NULL -> ");
                 }
                 else
                 {
-                    printf("%d ->", head->data[i]);
+                    printf("%d -> ", head->data[i]);
                 }
             }
             head = head->next;
@@ -167,38 +146,52 @@ void printInList(LinkedList* list){
     }
 }
 
-LinkedList* insert(int i, int value, LinkedList* list){
+LinkedList* insert(int i, int value, LinkedList* list) //REDO
+{  
 
     //NEED TO ADD ELEMENTS INTO ONE SPECIFIC PLACE
+    printf("Element to add:%d\n", value);
     Node* node;
     node = list ->head;
     int element;
     element = node -> numberOfElements;
     int posInList;
     posInList = i;
+    Node* oldNode = NULL;
     
-    while (node -> next != NULL && element <= i){
+    while (node -> next != NULL && element <= i)
+    {
         node = node -> next;
         element = element + (node -> numberOfElements);
         posInList = posInList - element;
+        printNode(node);
+        printf("Pos: %d, i: %d\n", element, i);
+        printf("Answer: %d\n\n", element <= i);
+        if (element == i){
+            oldNode = node;
+        }
 
     }
     printf("Index: %d, Elements Gone Through: %d, PositionToPlace: %d\n", i, element, posInList);
     //printNode(node);
     
-    if (node -> next == NULL){
+    if (node -> next == NULL)
+    {
         Node* newNode = createNode(value);
         node ->next = newNode;
         return list;
     }
-    else{
+    else
+    {
         int elements = node ->numberOfElements;
-        if (elements == MAXSIZE){
+        if (elements == MAXSIZE)
+        {
             
             int dataToMoveOn;
             //dataToMoveOn = node ->data[posInList];
             //node -> data[posInList] = value;
-            for (int j = posInList; j < node->numberOfElements; j++){
+            for (int j = posInList; j < node->numberOfElements; j++)
+            {
                 int temp = node -> data[j];
                 node->data[j] = value;
                 value = temp;
@@ -206,11 +199,13 @@ LinkedList* insert(int i, int value, LinkedList* list){
             dataToMoveOn = value;
             int twoOn;
             twoOn = 0;
-            while (twoOn < 1 && elements == MAXSIZE){
+            while (twoOn < 1 && elements == MAXSIZE)
+            {
                 printf("In twoOn Loop.  Also Elements: %d\n", elements);
                 twoOn = twoOn + 1;
                 node = node->next;
-                for (int j = posInList; j < node->numberOfElements; j++){
+                for (int j = posInList; j < node->numberOfElements; j++)
+                {
                     int temp = node -> data[j];
                     node->data[j] = value;
                     value = temp;
@@ -220,7 +215,8 @@ LinkedList* insert(int i, int value, LinkedList* list){
                 printf("New data.  twoOn %d.  elements: %d\n", twoOn, elements);
             }
             printf("twoOn is %d\n", twoOn);
-            if (twoOn == 1){
+            if (twoOn == 1)
+            {
                 printNode(node);
                 Node* newNode = createNode(dataToMoveOn);
                 Node* nodeToReLink;
@@ -228,27 +224,56 @@ LinkedList* insert(int i, int value, LinkedList* list){
                 node -> next = newNode;
                 newNode -> next = nodeToReLink;
             }
-            else{
+            else
+            {
                 node = node -> next;
                 printNode(node);
             }
         }
+        else
+        {
+            if (oldNode != NULL)
+            {
+                node = oldNode;
+                posInList = posInList + element;
+                element = node->numberOfElements;
+            }
+            posInList = posInList + element;
+            printf("Element is %d and elements is %d and posInList %d\n", element, elements, posInList);
+            //int placeInList = (element - elements) - 1; //This isn't correct.  Need's previous amount
+            int temp;
+            //rintf("Element to add at: %d\n",placeInList);
+            node->numberOfElements = node->numberOfElements + 1;
+            for (;posInList<node->numberOfElements;posInList++)
+            {
+                temp = node->data[posInList];
+                printf("Temp value:%d\n",temp);
+                node->data[posInList] = value;
+                value = temp;
+            }
+            
+        }
+        
     }
     return list;
 }
 
-LinkedList* delete(int value, LinkedList* list){
+LinkedList* delete(int value, LinkedList* list)
+{
     return NULL;
 }
 
-LinkedList* deleteIndex(int index, LinkedList* list){
+LinkedList* deleteIndex(int index, LinkedList* list)
+{
     return NULL;
 }
 
-int destroyListAll(LinkedList* list){
+int destroyListAll(LinkedList* list)
+{
     Node* node = list->head;
     //printf("node to delete: %d\n", *(node->data));
-    while (node != NULL){
+    while (node != NULL)
+    {
         Node* nextNode = node ->next;
         free(node);
         node = nextNode;
@@ -257,7 +282,8 @@ int destroyListAll(LinkedList* list){
     return 0;
 }
 
-int main(){
+int main()
+{
     
     //printf("Do we even start?\n");
     LinkedList *list;
@@ -296,7 +322,7 @@ int main(){
     list = append(list, 9);
     //printList(list);
     printf("\n\n");
-    list = append(list, 10);
+    //list = append(list, 10);
     //printList(list);
     printf("\n\n");
     list = append(list, 11);
@@ -308,6 +334,16 @@ int main(){
     //printf("Destroying All\n");
     list = insert(0, 1, list);
     list = append(list, 15);
+    list = insert(1, 10, list);
+    printInList(list);
+    list = insert(8, 100, list);
+    printf("\n");
+    list = insert(9,50,list);
+    printInList(list);
+    printf("\n\n");
+    printf("\n");
+    list = insert(12, 19, list);
+    printf("\n\n");
     printList(list);
     printf("\n\n");
     //printList(list);
