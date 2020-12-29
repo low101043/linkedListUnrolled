@@ -1,21 +1,6 @@
-#define MAXSIZE 4
+
 #include <stdlib.h>
 #include <stdio.h>
-
-
-typedef struct Node
-{
-    int numberOfElements;
-    int data[MAXSIZE];
-    struct Node* next;
-
-} Node;
-
-typedef struct LinkedList
-{
-    Node* head;
-
-} LinkedList;
 
 Node* createNode(int value)
 {
