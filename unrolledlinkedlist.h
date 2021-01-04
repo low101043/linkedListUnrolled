@@ -13,13 +13,13 @@ typedef struct LinkedList
 
 } LinkedList;
 
-LinkedList* createList();
-LinkedList* append(LinkedList* list, int num);
-void printList(LinkedList* list);
-void printNode(Node* node);
-void printInList(LinkedList* list);
-LinkedList* insert(int i, int value, LinkedList* list);
-LinkedList* delete(int index, LinkedList* list);
-int indexLinkedList(int index, LinkedList* list);
-int find(int value, LinkedList* list);
-int deleteList(LinkedList* list);
+LinkedList* createList();  //DONE
+LinkedList* appendList(LinkedList* list, int num);  //DONE
+void printList(LinkedList* list);  //DONE
+void printNode(Node* node);  //DONE
+void printInList(LinkedList* list);  //DONE
+LinkedList* insertIntoList(int i, int value, LinkedList* list);
+LinkedList* deleteFromList(int index, LinkedList* list);
+int indexInList(int index, LinkedList* list);  //DONE
+int findInList(int value, LinkedList* list);  //DONE
+int deleteList(LinkedList* list);  //DONE

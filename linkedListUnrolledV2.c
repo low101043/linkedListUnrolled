@@ -22,7 +22,7 @@ LinkedList* createList()
     return newList;
 }
 
-LinkedList* append(LinkedList* list, int num)
+LinkedList* appendList(LinkedList* list, int num)
 {
     Node* currentNode;
     currentNode = list->head;
@@ -88,8 +88,45 @@ void printList(LinkedList* list)
             currentNode = currentNode->next;
         }   
     }
-    
+}
 
+
+void printInNode(Node* node)
+{
+    printf("New Node: Elements in node: %d | ", node->numberOfElements);
+
+    for (int i = 0; i < MAXSIZE; i++)
+    {
+        if (i >= node->numberOfElements)
+        {
+            printf("NULL -> ");
+        }
+        else
+        {
+            printf("%d -> ", node->data[i]);
+        }
+    }
+}
+
+void printInList(LinkedList* list)
+{
+    Node* currentNode;
+    currentNode = list->head;
+
+    if (currentNode == NULL)
+    {
+        printf("Empty\n");
+    }
+    else
+    {
+        while (currentNode != NULL)
+        {
+            printInNode(currentNode);
+            currentNode = currentNode->next;
+        }
+        printf("End\n");
+    }
+    
 }
 
 int deleteList(LinkedList* list)
@@ -106,29 +143,108 @@ int deleteList(LinkedList* list)
     return 0;
 }
 
+int findInList(int value, LinkedList* list)
+{
+    int index;
+    int found;
+    int finalIndex;
+    Node* node;
+
+    finalIndex = -1;
+    index = -1;
+    found = 0;  //0 == FALSE
+    node = list->head;
+
+    while (node != NULL && found == 0)
+    {
+        int i;
+        for (i=0; i< node->numberOfElements; i++)
+        {
+            index = index + 1;
+            if (found == 0 && node->data[i] == value)
+            {
+                found = 1;
+                finalIndex = index;
+            }
+
+        }
+        node = node->next;
+    }
+
+    return finalIndex;
+}
+
+int indexInList(int index, LinkedList* list)
+{
+    int indexAt;
+    Node* node;
+
+    indexAt = -1;
+    node = list->head;
+
+    while (node != NULL && indexAt < index)
+    {
+        int arrayIndex;
+        for (arrayIndex=0; arrayIndex<node->numberOfElements; arrayIndex++)
+        {
+            indexAt = indexAt + 1;
+            if (indexAt == index)
+            {
+                return (node->data[arrayIndex]);
+            }
+        }
+        node = node->next;
+    }
+
+    return -1;
+}
+
 int main()
 {
     LinkedList* list;
     list = createList();
 
     printList(list);
+    printInList(list);
+    printf("%d\n", findInList(5, list));
+    printf("%d\n", indexInList(5, list));
 
-    list = append(list, 1);
-    list = append(list, 2);
-    list = append(list, 3);
-    list = append(list, 4);
-    list = append(list, 5);
-    list = append(list, 6);
-    list = append(list, 7);
-    list = append(list, 8);
-    list = append(list, 9);
-    list = append(list, 10);
-    list = append(list, 11);
-    list = append(list, 12);
-    list = append(list, 13);
-    list = append(list, 24);
+    printf("\n\n");
+
+    list = appendList(list, 1);
+    list = appendList(list, 2);
+    list = appendList(list, 3);
+    list = appendList(list, 4);
+    list = appendList(list, 5);
+    list = appendList(list, 6);
+    list = appendList(list, 7);
+    list = appendList(list, 8);
+    list = appendList(list, 9);
+    list = appendList(list, 10);
+    list = appendList(list, 11);
+    list = appendList(list, 12);
+    list = appendList(list, 13);
+    list = appendList(list, 24);
+
+    printf("\n\n");
+
+
+    printf("%d\n", findInList(10, list));
+    
+    printf("%d\n", findInList(24, list));
+
+    printf("\n");
+
+    printf("%d\n", indexInList(5, list));
+    printf("%d\n", indexInList(654, list));
+    printf("%d\n", indexInList(2, list));
+
+    printf("\n");
+
 
     printList(list);
+    printInList(list);
+
 
     deleteList(list);
 }
