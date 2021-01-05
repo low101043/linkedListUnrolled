@@ -129,6 +129,71 @@ void printInList(LinkedList* list)
     
 }
 
+LinkedList* deleteFromList(LinkedList* list, int index)
+{
+    int i;
+    Node* node;
+    int found = 0;
+
+    node = list->head;
+    i = 0;
+
+    while (node != NULL && i <= index)
+    {
+        int elements;
+        elements = node->numberOfElements;
+
+        i = i + elements;
+        if (i > index)
+        {
+            node = node;
+            found = 1;
+        }
+        else
+        {
+            node = node->next;
+        }
+    }
+
+    if (found)
+    {
+        int foundSub;
+        int indexElement;
+        int j;
+
+        i = i - node->numberOfElements;
+        indexElement = index - i;
+        foundSub = -1;
+        j = 0;
+        while (foundSub != indexElement)
+        {
+            if (node->data[j] != NULL)
+            {
+                foundSub = foundSub + 1;
+                j = j + 1;
+            }
+        }   
+        
+        int k;
+
+        for (k=foundSub;k<node->numberOfElements-1;k++)
+        {
+            int temp;
+            temp = node->data[k];
+            node->data[k] = node->data[k+1];
+            node->data[k+1] = temp;
+        }
+        node->numberOfElements = node->numberOfElements - 1;
+    }
+    else
+    {
+        printf("Not here");
+    }
+
+    return list;
+
+}
+
 int deleteList(LinkedList* list)
 {
     Node* node = list->head;
@@ -143,7 +208,7 @@ int deleteList(LinkedList* list)
     return 0;
 }
 
-int findInList(int value, LinkedList* list)
+int findInList(LinkedList* list, int value)
 {
     int index;
     int found;
@@ -174,7 +239,7 @@ int findInList(int value, LinkedList* list)
     return finalIndex;
 }
 
-int indexInList(int index, LinkedList* list)
+int indexInList(LinkedList* list, int index)
 {
     int indexAt;
     Node* node;
@@ -206,10 +271,9 @@ int main()
 
     printList(list);
     printInList(list);
-    printf("%d\n", findInList(5, list));
-    printf("%d\n", indexInList(5, list));
-
     printf("\n\n");
+
+    
 
     list = appendList(list, 1);
     list = appendList(list, 2);
@@ -227,22 +291,17 @@ int main()
     list = appendList(list, 24);
 
     printf("\n\n");
-
-
-    printf("%d\n", findInList(10, list));
+    printf("Deleting\n");
+    printInList(list);
+    list = deleteFromList(list, 10);
+    printInList(list);
+    list = deleteFromList(list, 11);
     
-    printf("%d\n", findInList(24, list));
 
-    printf("\n");
-
-    printf("%d\n", indexInList(5, list));
-    printf("%d\n", indexInList(654, list));
-    printf("%d\n", indexInList(2, list));
-
-    printf("\n");
+    printf("\n\n");
 
 
-    printList(list);
+    //printList(list);
     printInList(list);
 
 

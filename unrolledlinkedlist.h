@@ -18,8 +18,8 @@ LinkedList* appendList(LinkedList* list, int num);  //DONE
 void printList(LinkedList* list);  //DONE
 void printNode(Node* node);  //DONE
 void printInList(LinkedList* list);  //DONE
-LinkedList* insertIntoList(int i, int value, LinkedList* list);
-LinkedList* deleteFromList(int index, LinkedList* list);
-int indexInList(int index, LinkedList* list);  //DONE
-int findInList(int value, LinkedList* list);  //DONE
+LinkedList* insertIntoList(LinkedList* list, int i, int value);
+LinkedList* deleteFromList(LinkedList* list, int index);
+int indexInList(LinkedList* list, int index);  //DONE
+int findInList(LinkedList* list, int value);  //DONE
 int deleteList(LinkedList* list);  //DONE
