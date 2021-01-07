@@ -90,7 +90,6 @@ void printList(LinkedList* list)
     }
 }
 
-
 void printInNode(Node* node)
 {
     printf("New Node: Elements in node: %d | ", node->numberOfElements);
@@ -264,8 +263,153 @@ int indexInList(LinkedList* list, int index)
     return -1;
 }
 
+LinkedList* insertIntoList(LinkedList* list, int i, int value)
+{
+    Node* node;
+    int index;
+    int found;
+    node = list->head;
+    index = -1;
+    found = 0;
+
+    while (node != NULL && index < i)
+    {
+        int elements;
+        elements = node->numberOfElements;
+        index = index + elements;
+
+        if (index >= i)
+        {
+            found = 1;
+        }
+        else
+        {
+            node = node->next;
+        }
+        
+    }
+
+    if (found == 0)
+    {
+        appendList(list, value);
+        return list;
+    }
+    else
+    {
+
+        //printf("Inserting\n");
+        //printInNode(node);
+        if (node->numberOfElements != MAXSIZE)
+        {
+            int numHere;
+            numHere = node->numberOfElements;
+
+            index = index - numHere;
+            int indexToAdd;
+            indexToAdd = i - index - 1;
+
+            int k;
+
+            //printf("Insert at: %d\n", indexToAdd);
+            
+            for (k=indexToAdd;k<node->numberOfElements;k++)
+            {
+                int temp;
+                temp = node->data[k]; 
+                //printf("%d\n", temp);
+                node->data[k] = value;
+                value = temp;
+                //printf("%d\n", value);
+            }
+            node->data[k] = value;
+            node->numberOfElements = node->numberOfElements+1;
+        }
+        else
+        {
+            int finished;
+            finished = 0;
+
+            int numHere;
+            numHere = node->numberOfElements;
+
+            index = index - numHere;
+            int indexToAdd;
+            indexToAdd = i - index - 1;
+
+            
+
+            const int NODES_TO_CHECK = 2;
+            int checkedNodes = 0;
+
+
+            while (checkedNodes < NODES_TO_CHECK && finished == 0)   
+            {   
+                int k;
+                for (k=indexToAdd;k<node->numberOfElements;k++)
+                {
+                    int temp;
+                    temp = node->data[k]; 
+                    //printf("%d\n", temp);
+                    node->data[k] = value;
+                    value = temp;
+                    //printf("%d\n", value);
+                }
+
+                
+                checkedNodes = checkedNodes + 1;
+                if (node->numberOfElements != MAXSIZE)
+                {
+                    node->data[k] = value;
+                    node->numberOfElements = node->numberOfElements + 1;
+                    finished = 1;
+                }
+
+                else
+                {
+                    if (checkedNodes < NODES_TO_CHECK)
+                    {
+                        if (node->next == NULL)
+                        {
+                            Node* newNode;
+
+                            newNode = createNode(value);
+                            node->next = newNode;
+                            finished = 1;
+                        }
+                        else
+                        {
+                            node = node->next;
+                            indexToAdd = 0;
+                        }
+                       
+                    }
+                    else
+                    {
+                        Node* newNode;
+
+                        newNode = createNode(value);
+                        Node* nextNode = node->next;
+                        node->next = newNode;
+                        newNode->next = nextNode;
+                        finished = 1;
+                    }
+                   
+                }
+               
+            }
+            return list; 
+
+        }
+        
+        return list;
+    }
+    
+    
+}
+
 int main()
 {
+    //This code is for testing and showing the code working.  Please edit!
     LinkedList* list;
     list = createList();
 
@@ -295,13 +439,26 @@ int main()
     printInList(list);
     list = deleteFromList(list, 10);
     printInList(list);
+    printf("\n\n");
     list = deleteFromList(list, 11);
-    
+    list = deleteFromList(list, 10);
+    printInList(list);
+    printf("\n\n");
+
+    ///list = insertIntoList(list, 8, 50);
+    //list = insertIntoList(list, 9, 51);
+    printf("\n\n");
+    printInList(list);
 
     printf("\n\n");
 
 
     //printList(list);
+    printInList(list);
+
+    list = insertIntoList(list,5,100);
+    printf("\n\n");
+
     printInList(list);
 
 
